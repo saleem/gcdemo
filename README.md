@@ -24,3 +24,8 @@ I'm interested in seeing if the gc is optimized differntly on different hardware
 
 This is simply a demonstrator -- please use it to learn about how gc works and not as a hint on how to write production-ready code. Thank you!
 
+## How to run this demo
+
+1. Clone it: ``git clone https://github.com/saleem/gcdemo.git``
+2. Run the tests: ``./gradlew test``
+3. Read the code, especially the ``GarbageCollectionTest`` class.
