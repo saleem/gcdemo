@@ -10,21 +10,19 @@ import java.lang.ref.WeakReference;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
-public class PersonTest {
+public class GarbageCollectionTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
-    @Before
-    public void setUpStreams() {
+    @Before public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
 
-    @After
-    public void cleanUpStreams() {
+    @After public void cleanUpStreams() {
         System.setOut(null);
         System.setErr(null);
     }
@@ -57,6 +55,28 @@ public class PersonTest {
     @Test public void testWeakReferencesNotSetToNullAreGarbageCollected() {
         WeakReference<Person> person = new WeakReference<>(new Person("John"));
         WeakReference<Apartment> apartment = new WeakReference<>(new Apartment(73));
+        gc();
+        assertThat(outContent.toString(), containsString("Person John is being garbage collected"));
+        assertThat(outContent.toString(), containsString("Apartment 73 is being garbage collected"));
+    }
+
+    @Test public void testStrongCircularReferencesAreGarbageCollectedWhenUnreachable() {
+        Person person = new Person("John");
+        Apartment apartment = new Apartment(73);
+        person.setApartment(apartment);
+        apartment.setTenant(person);
+        person = null;
+        apartment = null;
+        gc();
+        assertThat(outContent.toString(), containsString("Person John is being garbage collected"));
+        assertThat(outContent.toString(), containsString("Apartment 73 is being garbage collected"));
+    }
+
+    @Test public void testWeakCircularReferencesAreGarbageCollectedAggressively() {
+        WeakReference<Person> person = new WeakReference<>(new Person("John"));
+        WeakReference<Apartment> apartment = new WeakReference<>(new Apartment(73));
+        person.get().setApartment(apartment.get());
+        apartment.get().setTenant(person.get());
         gc();
         assertThat(outContent.toString(), containsString("Person John is being garbage collected"));
         assertThat(outContent.toString(), containsString("Apartment 73 is being garbage collected"));
