@@ -20,7 +20,7 @@ They are (a) inefficient and (b) not even guaranteed to cause a garbage collecti
 Because of the latter reason, I put the current thread to sleep in the tests to increase the probability that the gc will indeed run. 
 "This works on my machine", that is, the tests pass and produce expected behavior. 
 Please let me know if this is not the case for you; 
-I'm interested in seeing if the gc is optimized differntly on different hardware/software architectures. 
+I'm interested in seeing if the gc is optimized differently on different hardware/software architectures. 
 
 This is simply a demonstrator -- please use it to learn about how gc works and not as a hint on how to write production-ready code. Thank you!
 
