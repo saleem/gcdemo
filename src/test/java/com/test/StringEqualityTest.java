@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class StringEqualityTest {
 
     @Test
-    public void stringLiteralsAreComparableUsingDoubleEquals() {
+    public void stringLiteralsAreComparableUsingEqualsMethodAndEqualsOperator() {
         String one = "Hello World!";
         String two = "Hello World!";
         assertTrue(one == two);
@@ -21,7 +21,7 @@ public class StringEqualityTest {
     }
 
     @Test
-    public void deliberatlyCreatedStringsAreComparableUsingEqualsMethodOnly() {
+    public void deliberatlyCreatedStringsAreComparableUsingEqualsMethodButNotEqualsOperator() {
         String one = new String("Hello World!");
         String two = new String("Hello World!");
         assertFalse(one == two);
@@ -30,12 +30,20 @@ public class StringEqualityTest {
     }
 
     @Test
-    public void stringsReadFromFileAreComparableUsingEqualsMethodOnly() throws Exception {
+    public void stringsReadFromFileAreComparableUsingEqualsMethodButNotEqualsOperator() throws Exception {
         String expectedString = "Hello World!";
         for (String actualString : readStringsFromFile()) {
             assertFalse(actualString == expectedString);
             assertTrue(actualString.equals(expectedString));
             assertTrue(expectedString.equals(actualString));
+        }
+    }
+
+    @Test
+    public void internedStringsReadFromFileAreComparableUsingEqualsOperator() throws Exception {
+        String expectedString = "Hello World!";
+        for (String actualString : readStringsFromFile()) {
+            assertTrue(actualString.intern() == expectedString.intern());
         }
     }
 
@@ -50,5 +58,4 @@ public class StringEqualityTest {
         dataInputStream.close();
         return strings;
     }
-
 }
