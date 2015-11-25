@@ -1,5 +1,7 @@
-package com.test;
+package com.test.gcdemo;
 
+import com.test.gcdemo.Apartment;
+import com.test.gcdemo.Person;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

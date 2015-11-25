@@ -1,4 +1,4 @@
-package com.test;
+package com.test.gcdemo;
 
 public class Apartment {
     private int number;

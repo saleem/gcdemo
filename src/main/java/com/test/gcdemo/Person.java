@@ -1,4 +1,4 @@
-package com.test;
+package com.test.gcdemo;
 
 public class Person {
     private String name;
