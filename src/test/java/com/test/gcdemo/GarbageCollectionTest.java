@@ -18,15 +18,19 @@ public class GarbageCollectionTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private PrintStream originalOutStream;
+    private PrintStream originalErrStream;
 
     @Before public void setUpStreams() {
+        originalOutStream = System.out;
+        originalErrStream = System.err;
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
 
     @After public void cleanUpStreams() {
-        System.setOut(null);
-        System.setErr(null);
+        System.setOut(originalOutStream);
+        System.setErr(originalErrStream);
     }
 
     @Test public void testConstructors() {

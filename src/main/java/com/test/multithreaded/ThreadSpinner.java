@@ -1,5 +1,7 @@
 package com.test.multithreaded;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -10,8 +12,8 @@ public class ThreadSpinner<T, R> {
 
     public ThreadSpinner (Function<T, R> func, Consumer<R> onSuccess, Consumer<Exception> onFailure) {
         this.func = func;
-        this.onSuccess = onSuccess;
-        this.onFailure = onFailure;
+        this.onSuccess = requireNonNull(onSuccess, "onSuccess Consumer must not be null");
+        this.onFailure = requireNonNull(onFailure, "onFailure Consumer must not be null");
     }
 
     public void run(T argument) {
