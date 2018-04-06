@@ -21,7 +21,7 @@ public class StringEqualityTest {
     }
 
     @Test
-    public void deliberatlyCreatedStringsAreComparableUsingEqualsMethodButNotEqualsOperator() {
+    public void deliberatelyCreatedStringsAreComparableUsingEqualsMethodButNotEqualsOperator() {
         String one = new String("Hello World!");
         String two = new String("Hello World!");
         assertFalse(one == two);
