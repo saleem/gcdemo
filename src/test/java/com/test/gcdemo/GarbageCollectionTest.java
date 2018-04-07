@@ -1,7 +1,5 @@
 package com.test.gcdemo;
 
-import com.test.gcdemo.Apartment;
-import com.test.gcdemo.Person;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,16 +14,14 @@ import static org.junit.Assert.assertThat;
 
 public class GarbageCollectionTest {
 
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private PrintStream originalOutStream;
-    private PrintStream originalErrStream;
+    private final PrintStream originalOutStream = System.out;
+    private final PrintStream originalErrStream = System.err;
+    private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
 
     @Before public void setUpStreams() {
-        originalOutStream = System.out;
-        originalErrStream = System.err;
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
+        System.setOut(new PrintStream(outStream));
+        System.setErr(new PrintStream(errStream));
     }
 
     @After public void cleanUpStreams() {
@@ -36,16 +32,16 @@ public class GarbageCollectionTest {
     @Test public void testConstructors() {
         Person person = new Person("John");
         Apartment apartment = new Apartment(73);
-        assertThat(outContent.toString(), containsString("Person John is being constructed"));
-        assertThat(outContent.toString(), containsString("Apartment 73 is being constructed"));
+        assertThat(outStream.toString(), containsString("Person John is being constructed"));
+        assertThat(outStream.toString(), containsString("Apartment 73 is being constructed"));
     }
 
     @Test public void testStrongReferencesNotSetToNullAreNotGarbageCollected() {
         Person person = new Person("John");
         Apartment apartment = new Apartment(73);
         gc();
-        assertThat(outContent.toString(), not(containsString("Person John is being garbage collected")));
-        assertThat(outContent.toString(), not(containsString("Apartment 73 is being garbage collected")));
+        assertThat(outStream.toString(), not(containsString("Person John is being garbage collected")));
+        assertThat(outStream.toString(), not(containsString("Apartment 73 is being garbage collected")));
     }
 
     @Test public void testStrongReferencesMustBeSetToNullToBeGarbageCollected() {
@@ -54,16 +50,16 @@ public class GarbageCollectionTest {
         person = null;
         apartment = null;
         gc();
-        assertThat(outContent.toString(), containsString("Person John is being garbage collected"));
-        assertThat(outContent.toString(), containsString("Apartment 73 is being garbage collected"));
+        assertThat(outStream.toString(), containsString("Person John is being garbage collected"));
+        assertThat(outStream.toString(), containsString("Apartment 73 is being garbage collected"));
     }
 
     @Test public void testWeakReferencesNotSetToNullAreGarbageCollected() {
         WeakReference<Person> person = new WeakReference<>(new Person("John"));
         WeakReference<Apartment> apartment = new WeakReference<>(new Apartment(73));
         gc();
-        assertThat(outContent.toString(), containsString("Person John is being garbage collected"));
-        assertThat(outContent.toString(), containsString("Apartment 73 is being garbage collected"));
+        assertThat(outStream.toString(), containsString("Person John is being garbage collected"));
+        assertThat(outStream.toString(), containsString("Apartment 73 is being garbage collected"));
     }
 
     @Test public void testStrongCircularReferencesAreGarbageCollectedWhenUnreachable() {
@@ -74,8 +70,8 @@ public class GarbageCollectionTest {
         person = null;
         apartment = null;
         gc();
-        assertThat(outContent.toString(), containsString("Person John is being garbage collected"));
-        assertThat(outContent.toString(), containsString("Apartment 73 is being garbage collected"));
+        assertThat(outStream.toString(), containsString("Person John is being garbage collected"));
+        assertThat(outStream.toString(), containsString("Apartment 73 is being garbage collected"));
     }
 
     @Test public void testWeakCircularReferencesAreGarbageCollectedAggressively() {
@@ -84,8 +80,8 @@ public class GarbageCollectionTest {
         person.get().setApartment(apartment.get());
         apartment.get().setTenant(person.get());
         gc();
-        assertThat(outContent.toString(), containsString("Person John is being garbage collected"));
-        assertThat(outContent.toString(), containsString("Apartment 73 is being garbage collected"));
+        assertThat(outStream.toString(), containsString("Person John is being garbage collected"));
+        assertThat(outStream.toString(), containsString("Apartment 73 is being garbage collected"));
     }
 
     private void gc() {
