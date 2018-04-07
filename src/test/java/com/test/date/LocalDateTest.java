@@ -8,7 +8,7 @@ import java.time.*;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Test cases for various DateTime features")
 public class LocalDateTest {

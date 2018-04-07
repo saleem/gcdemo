@@ -6,7 +6,7 @@ import java.lang.ref.WeakReference;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.jupiter.api.*;
 
 @DisplayName("Test cases for various DateTime features")
