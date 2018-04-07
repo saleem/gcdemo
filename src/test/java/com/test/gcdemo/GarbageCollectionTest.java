@@ -1,9 +1,5 @@
 package com.test.gcdemo;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.ref.WeakReference;
@@ -11,7 +7,9 @@ import java.lang.ref.WeakReference;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
+import org.junit.jupiter.api.*;
 
+@DisplayName("Test cases for various DateTime features")
 public class GarbageCollectionTest {
 
     private final PrintStream originalOutStream = System.out;
@@ -19,16 +17,17 @@ public class GarbageCollectionTest {
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
 
-    @Before public void setUpStreams() {
+    @BeforeEach public void setUpStreams() {
         System.setOut(new PrintStream(outStream));
         System.setErr(new PrintStream(errStream));
     }
 
-    @After public void cleanUpStreams() {
+    @AfterEach public void cleanUpStreams() {
         System.setOut(originalOutStream);
         System.setErr(originalErrStream);
     }
 
+    @DisplayName("Verify that constructors initialize object state")
     @Test public void testConstructors() {
         Person person = new Person("John");
         Apartment apartment = new Apartment(73);
@@ -36,6 +35,7 @@ public class GarbageCollectionTest {
         assertThat(outStream.toString(), containsString("Apartment 73 is being constructed"));
     }
 
+    @DisplayName("Verify that strong references that are NOT explicitly set to null are NOT garbage collected")
     @Test public void testStrongReferencesNotSetToNullAreNotGarbageCollected() {
         Person person = new Person("John");
         Apartment apartment = new Apartment(73);
@@ -44,6 +44,7 @@ public class GarbageCollectionTest {
         assertThat(outStream.toString(), not(containsString("Apartment 73 is being garbage collected")));
     }
 
+    @DisplayName("Verify that strong references that ARE explicitly set to null ARE garbage collected")
     @Test public void testStrongReferencesMustBeSetToNullToBeGarbageCollected() {
         Person person = new Person("John");
         Apartment apartment = new Apartment(73);
@@ -54,6 +55,7 @@ public class GarbageCollectionTest {
         assertThat(outStream.toString(), containsString("Apartment 73 is being garbage collected"));
     }
 
+    @DisplayName("Verify that weak references do not need to be explicitly set to null to be garbage collected")
     @Test public void testWeakReferencesNotSetToNullAreGarbageCollected() {
         WeakReference<Person> person = new WeakReference<>(new Person("John"));
         WeakReference<Apartment> apartment = new WeakReference<>(new Apartment(73));
@@ -62,6 +64,7 @@ public class GarbageCollectionTest {
         assertThat(outStream.toString(), containsString("Apartment 73 is being garbage collected"));
     }
 
+    @DisplayName("Verify that strong circular references that ARE explicitly set to null ARE garbage collected")
     @Test public void testStrongCircularReferencesAreGarbageCollectedWhenUnreachable() {
         Person person = new Person("John");
         Apartment apartment = new Apartment(73);
@@ -74,6 +77,7 @@ public class GarbageCollectionTest {
         assertThat(outStream.toString(), containsString("Apartment 73 is being garbage collected"));
     }
 
+    @DisplayName("Verify that weak circular references do not need to be explicitly set to null to be garbage collected")
     @Test public void testWeakCircularReferencesAreGarbageCollectedAggressively() {
         WeakReference<Person> person = new WeakReference<>(new Person("John"));
         WeakReference<Apartment> apartment = new WeakReference<>(new Apartment(73));

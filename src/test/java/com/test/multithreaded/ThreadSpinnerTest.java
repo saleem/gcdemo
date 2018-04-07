@@ -1,10 +1,9 @@
 package com.test.multithreaded;
 
 import java.io.*;
-import org.junit.*;
-
 import java.util.function.Consumer;
 import java.util.function.Function;
+import org.junit.jupiter.api.*;
 
 /**
  * Unit test class illustrating the asynchronous nature of threads.
@@ -17,12 +16,12 @@ import java.util.function.Function;
     at com.test.multithreaded.ThreadSpinnerTest.lambda$setup$0(ThreadSpinnerTest.java:24)
     at com.test.multithreaded.ThreadSpinnerTest$$Lambda$1/1101288798.apply(Unknown Source)
  * }
- *
  * </pre>
  */
+@DisplayName("Test cases for various DateTime features")
 public class ThreadSpinnerTest {
     ThreadSpinner<String, Integer> spinner;
-    @Before
+    @BeforeEach
     public void setup() {
         Function<String, Integer> lengthCounter = s -> s.length();
         Consumer<Integer> onSuccess = i -> System.out.printf("Length successfully calculated as %d%n", i);
@@ -34,13 +33,13 @@ public class ThreadSpinnerTest {
         spinner = new ThreadSpinner<>(lengthCounter, onSuccess, onFailure);
     }
 
-    @Test
-    public void testOnSuccess() {
+    @DisplayName("Call the multi-threaded function with a valid argument, causing it to succeed")
+    @Test public void onSuccess() {
         spinner.run("hello world");
     }
 
-    @Test
-    public void testOnFailure() {
+    @DisplayName("Call the multi-threaded function with an invalid argument, causing it to fail")
+    @Test public void onFailure() {
         spinner.run(null);
     }
 }
