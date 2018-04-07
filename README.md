@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/saleem/javademos.svg?branch=master)](https://travis-ci.org/saleem/javademos)
+
 # gcdemo
 
 A simple demonstrator of Java's garbage collection mechanism.
