@@ -1,8 +1,12 @@
 [![Build Status](https://travis-ci.org/saleem/javademos.svg?branch=master)](https://travis-ci.org/saleem/javademos)
 
-# gcdemo
+# javademos
 
-A simple demonstrator of Java's garbage collection mechanism.
+A simple demonstrator of some Java features, viz:
+1. Garbage collection
+2. Multi-threading
+3. String comparison
+4. Date comparison
 
 ## Garbage Collection
 
