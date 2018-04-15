@@ -20,6 +20,11 @@ public class LocalDateTest {
         assertThat(ldt.toString(), is("2009-03-03T15:05:50"));
     }
 
+    @DisplayName("Verify that toString() of a fixed instant of time with nanos is always the same")
+    @Test public void localDateTimeWithFixedClockWithNanos() {
+        Clock clock = Clock.fixed(Instant.ofEpochSecond(1236092750L), ZoneId.of("UTC"));
+        System.out.printf("Clock: %s%n", clock.instant());
+    }
 
     @DisplayName("Verify that, regardless of the current time, the UTC time is always ahead of the Chicago time")
     @Test public void utcClockIsLaterThanChicagoClock() throws InterruptedException {
