@@ -9,11 +9,6 @@ public class Person {
     private final Date dateOfBirth;
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
-    public Person(String name, Date dateOfBirth) {
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public Person(String name, String dateOfBirth) throws IllegalArgumentException {
         try {
             this.name = Objects.requireNonNull(name);
@@ -28,10 +23,14 @@ public class Person {
     }
 
     public int getCenturyOfBirth() {
+        int year = getYearOfBirth();
+        return year - year % 100;
+    }
+
+    public int getYearOfBirth() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateOfBirth);
-        int year = cal.get(Calendar.YEAR);
-        return year - year % 100;
+        return cal.get(Calendar.YEAR);
     }
 }
 

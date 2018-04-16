@@ -1,6 +1,8 @@
 package com.test.optional;
 
 import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 import org.hamcrest.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.jupiter.api.*;
