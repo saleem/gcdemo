@@ -8,9 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Copyright Sonic Drive-In ® 2018.
- */
 class RolodexTest {
 
     private final Rolodex rolodex = new Rolodex();

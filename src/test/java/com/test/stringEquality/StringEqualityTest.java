@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
-@DisplayName("Call the multi-threaded function with a valid argument, causing it to succeed")
+@DisplayName("Various tests to demonstrate when Java Strings are interned, and when they're not")
 public class StringEqualityTest {
 
     @DisplayName("Verify that two string literals can be compared by using both the == operator and equals() method")

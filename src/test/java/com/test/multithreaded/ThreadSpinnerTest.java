@@ -18,7 +18,7 @@ import org.junit.jupiter.api.*;
  * }
  * </pre>
  */
-@DisplayName("Test cases for various DateTime features")
+@DisplayName("Test case to demonstrate the asynchronous nature of threads")
 public class ThreadSpinnerTest {
     ThreadSpinner<String, Integer> spinner;
     @BeforeEach

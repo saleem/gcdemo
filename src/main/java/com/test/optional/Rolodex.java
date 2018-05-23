@@ -26,6 +26,11 @@ public class Rolodex {
         return people.stream().filter(p -> p.getCenturyOfBirth() == firstYearInCentury).collect(Collectors.toList());
     }
 
+    public Optional<Person> findFirstByBirthYear(int birthYear) {
+        List<Person> match = people.stream().filter(p -> p.getYearOfBirth() == birthYear).collect(Collectors.toList());
+        return match.isEmpty() ? Optional.empty() : Optional.of(match.get(0));
+    }
+
     private void initializeWithSomePeople() {
         people.add(new Person("Adele", "1988-05-05"));
         people.add(new Person("Einstein", "1879-03-14"));

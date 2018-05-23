@@ -9,7 +9,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.jupiter.api.*;
 
-@DisplayName("Test cases for various DateTime features")
+@DisplayName("Test cases to show how Java's garbage collection treats objects with both strong and weak references")
 public class GarbageCollectionTest {
 
     private final PrintStream originalOutStream = System.out;
