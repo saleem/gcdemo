@@ -19,4 +19,22 @@ public class ComplexNumber {
                 ", imaginaryPart=" + imaginaryPart +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ComplexNumber)) return false;
+
+        ComplexNumber that = (ComplexNumber) o;
+
+        if (!realPart.equals(that.realPart)) return false;
+        return imaginaryPart.equals(that.imaginaryPart);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = realPart.hashCode();
+        result = 31 * result + imaginaryPart.hashCode();
+        return result;
+    }
 }
