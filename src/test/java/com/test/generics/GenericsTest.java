@@ -44,6 +44,7 @@ public class GenericsTest {
      * <code>Optional<ComplexNumber> complexNumber = createOptionalInteger();</code>
      * This is how inheritance applies to Generic types.
      * See https://docs.oracle.com/javase/tutorial/java/generics/inheritance.html
+     * See https://docs.oracle.com/javase/tutorial/java/generics/subtyping.html
      */
     @DisplayName("Show that is-a relationship is non-trivial when using generics")
     @Test public void testIsARelationshipWithOptionalObjects() {
