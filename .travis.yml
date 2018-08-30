@@ -1,11 +1,6 @@
-dist: trusty
-  language: java
-
-install:
-  wget https://download.java.net/java/GA/jdk10/10/binaries/openjdk-10_linux-x64_bin.tar.gz
-  tar -xzf openjdk-10_linux-x64_bin.tar.gz
-  export JAVA_HOME=$(pwd)/jdk-10
-
+language: java
+jdk:
+  - oraclejdk9
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
